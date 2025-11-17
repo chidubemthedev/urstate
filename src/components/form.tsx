@@ -34,6 +34,7 @@ const Form = ({ trigger }: Props) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
+  const [submittedRole, setSubmittedRole] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -64,6 +65,8 @@ const Form = ({ trigger }: Props) => {
       setName("");
       setEmail("");
       setPhone("");
+      // store the role that was submitted so Success can render role-specific copy
+      setSubmittedRole(role ?? null);
       setRole(undefined);
       // Close the form dialog and open the success dialog
       setOpen(false);
@@ -174,7 +177,11 @@ const Form = ({ trigger }: Props) => {
       </Dialog>
 
       {/* Success dialog controlled from this component */}
-      <Success open={successOpen} onOpenChange={(v) => setSuccessOpen(!!v)} />
+      <Success
+        open={successOpen}
+        onOpenChange={(v) => setSuccessOpen(!!v)}
+        role={submittedRole}
+      />
     </>
   );
 };

@@ -14,9 +14,37 @@ type Props = {
   trigger?: React.ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  role?: string | null;
 };
 
-const Success = ({ trigger, open, onOpenChange }: Props) => {
+const Success = ({ trigger, open, onOpenChange, role }: Props) => {
+  const getDescription = () => {
+    if (role === "owner") {
+      return (
+        <>
+          To list your property today, click below to connect directly with our
+          onboarding team.
+        </>
+      );
+    }
+
+    if (role === "manager") {
+      return (
+        <>
+          Start onboarding your properties now, connect with our team to get set
+          up.
+        </>
+      );
+    }
+
+    // default (renter)
+    return (
+      <>
+        Meanwhile, join our WhatsApp Channel to stay updated on available
+        properties and rental tips.
+      </>
+    );
+  };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {trigger}
@@ -31,20 +59,55 @@ const Success = ({ trigger, open, onOpenChange }: Props) => {
             You&apos;re now on our waitlist.
           </DialogTitle>
           <DialogDescription className="text-center text-[#777777] text-base leading-6">
-            Meanwhile, join our WhatsApp Channel to stay updated on available
-            properties and rental tips.
+            {getDescription()}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="mt-10">
-          <Link
-            href={"https://whatsapp.com/channel/0029VbBLLYU1NCrO6ZGIsO1J"}
-            target={"_blank"}
-            className="w-full"
-          >
-            <Button type="button" size={"lg"} className="w-full h-12">
-              Join WhatsApp Channel
-            </Button>
-          </Link>
+          {/* Owner: show WhatsApp + Talk button; Manager: only Talk; Renter (default): only WhatsApp */}
+          {role === "owner" && (
+            <div className="flex flex-col gap-4 w-full">
+              <Link href={"mailto:hello.urstate@gmail.com"} className="w-full">
+                <Button type="button" size={"lg"} className="w-full h-12">
+                  Talk to our team
+                </Button>
+              </Link>
+
+              <Link
+                href={"https://whatsapp.com/channel/0029VbBLLYU1NCrO6ZGIsO1J"}
+                target={"_blank"}
+                className="w-full"
+              >
+                <Button
+                  type="button"
+                  size={"lg"}
+                  className="w-full h-12 border border-[#0C2C43]"
+                  variant={"secondary"}
+                >
+                  Join WhatsApp Channel
+                </Button>
+              </Link>
+            </div>
+          )}
+
+          {role === "manager" && (
+            <Link href={"mailto:hello.urstate@gmail.com"} className="w-full">
+              <Button type="button" size={"lg"} className="w-full h-12">
+                Talk to our team
+              </Button>
+            </Link>
+          )}
+
+          {(!role || role === "renter") && (
+            <Link
+              href={"https://whatsapp.com/channel/0029VbBLLYU1NCrO6ZGIsO1J"}
+              target={"_blank"}
+              className="w-full"
+            >
+              <Button type="button" size={"lg"} className="w-full h-12">
+                Join WhatsApp Channel
+              </Button>
+            </Link>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
