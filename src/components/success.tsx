@@ -10,12 +10,14 @@ import { Button } from "./ui/button";
 import Image from "next/image";
 
 type Props = {
-  trigger: React.ReactNode;
+  trigger?: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
-const Success = ({ trigger }: Props) => {
+const Success = ({ trigger, open, onOpenChange }: Props) => {
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       {trigger}
       <DialogContent className="md:px-[136px] md:py-[100px] md:min-w-[670px]">
         <DialogHeader className="space-y-4">
@@ -33,7 +35,7 @@ const Success = ({ trigger }: Props) => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="mt-10">
-          <Button type="submit" size={"lg"} className="w-full h-12">
+          <Button type="button" size={"lg"} className="w-full h-12">
             Join WhatsApp Channel
           </Button>
         </DialogFooter>

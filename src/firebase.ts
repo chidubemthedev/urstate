@@ -42,10 +42,12 @@ export async function addWaitlistEntry(
     });
 
     console.log("Document written with ID: ", docRef.id);
-    alert("Thanks for signing up! We've added you to the waitlist.");
+    // Return the new document id so callers can react to success
+    return docRef.id;
   } catch (e) {
     console.error("Error adding document: ", e);
-    alert("Oops! Something went wrong. Please try again.");
+    // Re-throw so callers can handle errors (and show UI feedback)
+    throw e;
   }
 }
 
