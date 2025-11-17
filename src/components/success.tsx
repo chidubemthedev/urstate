@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 type Props = {
   trigger?: React.ReactNode;
@@ -35,9 +36,15 @@ const Success = ({ trigger, open, onOpenChange }: Props) => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="mt-10">
-          <Button type="button" size={"lg"} className="w-full h-12">
-            Join WhatsApp Channel
-          </Button>
+          <Link
+            href={"https://whatsapp.com/channel/0029VbBLLYU1NCrO6ZGIsO1J"}
+            target={"_blank"}
+            className="w-full"
+          >
+            <Button type="button" size={"lg"} className="w-full h-12">
+              Join WhatsApp Channel
+            </Button>
+          </Link>
         </DialogFooter>
       </DialogContent>
     </Dialog>
