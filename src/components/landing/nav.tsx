@@ -2,7 +2,6 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
 import Form from "../form";
-import Success from "../success";
 
 const Nav = () => {
   return (
@@ -18,20 +17,6 @@ const Nav = () => {
               className="border border-[#0C2C43]"
             >
               Join our Waitlist
-            </Button>
-          </DialogTrigger>
-        }
-      />
-
-      <Success
-        trigger={
-          <DialogTrigger asChild>
-            <Button
-              size={"lg"}
-              variant={"outline"}
-              className="border border-[#0C2C43]"
-            >
-              Success
             </Button>
           </DialogTrigger>
         }
