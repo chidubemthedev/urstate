@@ -5,6 +5,7 @@ import Hero from "@/components/landing/hero";
 import Nav from "@/components/landing/nav";
 import Spark from "@/components/landing/spark";
 import Trio from "@/components/landing/trio";
+import TrioMobile from "@/components/landing/trio-mobile";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Nav />
       <Hero />
       <Trio />
+      <TrioMobile />
       <Banner />
       <Spark />
       <Cta />
