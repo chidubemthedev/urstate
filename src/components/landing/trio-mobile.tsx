@@ -3,7 +3,7 @@ import Image from "next/image";
 const TrioMobile = () => {
   return (
     <div className="flex flex-col md:hidden gap-6 items-center justify-center">
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 px-2.5">
         <Image
           src={"/images/olumide.png"}
           width={372}
@@ -48,13 +48,15 @@ const TrioMobile = () => {
         </div>
       </div>
 
-      <Image
-        src={"/images/apply.png"}
-        width={283}
-        height={355}
-        alt="beach house"
-        className="w-full h-full"
-      />
+      <div className="px-2.5">
+        <Image
+          src={"/images/apply.png"}
+          width={283}
+          height={355}
+          alt="beach house"
+          className="w-full h-full"
+        />
+      </div>
     </div>
   );
 };

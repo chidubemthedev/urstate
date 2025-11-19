@@ -6,15 +6,33 @@ import Form from "../form";
 const Nav = () => {
   return (
     <div className="flex items-center justify-between sticky top-0 py-4 bg-white z-50">
-      <Image src={"/images/logo.png"} width={158} height={37} alt="logo" />
-
+      <div className="hidden md:flex">
+        <Image src={"/images/logo.png"} width={158} height={37} alt="logo" />
+      </div>
+      <div className="flex md:hidden">
+        <Image src={"/images/logo.png"} width={120} height={28} alt="logo" />
+      </div>
       <Form
         trigger={
           <DialogTrigger asChild>
             <Button
               size={"lg"}
               variant={"outline"}
-              className="border border-[#0C2C43]"
+              className="border border-[#0C2C43] hidden md:flex"
+            >
+              Join our Waitlist
+            </Button>
+          </DialogTrigger>
+        }
+      />
+
+      <Form
+        trigger={
+          <DialogTrigger asChild>
+            <Button
+              size={"sm"}
+              variant={"outline"}
+              className="border border-[#0C2C43] flex md:hidden"
             >
               Join our Waitlist
             </Button>
