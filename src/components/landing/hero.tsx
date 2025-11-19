@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
+import Form from "../form";
+import { DialogTrigger } from "../ui/dialog";
 
 const Hero = () => {
   return (
@@ -44,7 +46,13 @@ const Hero = () => {
           payments, and trust — all in one place.
         </p>
       </div>
-      <Button size={"lg"}>Join our Waitlist</Button>
+      <Form
+        trigger={
+          <DialogTrigger asChild>
+            <Button size={"lg"}>Join our Waitlist</Button>
+          </DialogTrigger>
+        }
+      />
     </div>
   );
 };
