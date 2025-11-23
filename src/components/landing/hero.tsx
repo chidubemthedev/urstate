@@ -5,7 +5,7 @@ import { DialogTrigger } from "../ui/dialog";
 
 const Hero = () => {
   return (
-    <div className="relative flex items-center justify-center flex-col gap-6 md:gap-10 h-[50vh] md:h-[60vh]">
+    <div className="relative flex items-center justify-center flex-col gap-6 md:gap-10 py-10 md:py-20">
       <div className="hidden md:flex absolute left-[9%] top-[25%] items-center justify-center gap-2 bg-[#85BFE9] rounded-xl px-[13.5px] py-1 -z-10">
         <p className="text-[#333333] text-sm leading-5">
           We&apos;re still in Pre-Alpha!

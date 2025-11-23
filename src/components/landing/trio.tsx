@@ -3,7 +3,7 @@ import Image from "next/image";
 const Trio = () => {
   return (
     <div className="hidden md:grid grid-cols-2 gap-6 items-center justify-center">
-      <div className="shadow-[0_0_5px_0_#00000024] h-full flex flex-col justify-center px-5 space-y-10">
+      <div className="shadow-[0_0_5px_0_#00000024] h-full flex flex-col justify-center px-5 space-y-10 rounded-xl">
         <div className="">
           <h1 className="text-[#333333] text-[22px] leading-8 font-bold">
             For Renters
