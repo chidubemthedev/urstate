@@ -35,7 +35,7 @@ const Trio = () => {
       <div className="flex gap-6">
         <div className="flex flex-col gap-6">
           <Image
-            src={"/images/olumide.png"}
+            src={"/images/promise.png"}
             width={372}
             height={96}
             alt="beach house"
