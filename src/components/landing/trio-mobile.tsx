@@ -5,7 +5,7 @@ const TrioMobile = () => {
     <div className="flex flex-col md:hidden gap-6 items-center justify-center">
       <div className="flex flex-col gap-4 px-2.5">
         <Image
-          src={"/images/olumide.png"}
+          src={"/images/promise.png"}
           width={372}
           height={96}
           alt="beach house"
