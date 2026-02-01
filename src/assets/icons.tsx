@@ -201,3 +201,28 @@ export const GoogleIcon = () => (
     />
   </svg>
 );
+
+export const RegisterUser = () => (
+  <svg
+    width="80"
+    height="80"
+    viewBox="0 0 80 80"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M56.6654 28.3337C56.6654 19.1289 49.2034 11.667 39.9987 11.667C30.794 11.667 23.332 19.1289 23.332 28.3337C23.332 37.5383 30.794 45.0003 39.9987 45.0003C49.2034 45.0003 56.6654 37.5383 56.6654 28.3337Z"
+      stroke="#0C2C43"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M63.3346 68.3333C63.3346 55.4467 52.888 45 40.0013 45C27.1147 45 16.668 55.4467 16.668 68.3333"
+      stroke="#0C2C43"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+);
