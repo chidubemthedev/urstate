@@ -16,7 +16,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { EyeOffIcon } from "lucide-react";
+import { CheckIcon, EyeOffIcon } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { ArrowLeft } from "lucide-react";
 
@@ -87,9 +87,25 @@ const RegisterThree = ({ form }: Props) => {
                   <FieldError errors={[fieldState.error]} />
                 )}
                 <div>
-                  <p>1</p>
-                  <p>2</p>
-                  <p>3</p>
+                  <p className="mb-1.5">Your password must include:</p>
+                  <div className="space-y-1.5">
+                    <div className="flex gap-2 items-center">
+                      <CheckIcon />
+                      8-32 characters long
+                    </div>
+                    <div className="flex gap-2 items-center">
+                      <CheckIcon />1 lowercase character (a-z)
+                    </div>
+                    <div className="flex gap-2 items-center">
+                      <CheckIcon />1 uppercase character (A-Z)
+                    </div>
+                    <div className="flex gap-2 items-center">
+                      <CheckIcon />1 number
+                    </div>
+                    <div className="flex gap-2 items-center">
+                      <CheckIcon />1 special character e.g. ! @ # $ %
+                    </div>
+                  </div>
                 </div>
               </Field>
             )}
