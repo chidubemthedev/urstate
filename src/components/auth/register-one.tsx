@@ -2,7 +2,7 @@ import { RegisterUser } from "@/assets/icons";
 import { useAuthStore } from "@/store/authStore";
 
 const RegisterOne = () => {
-  const { setRegisterStep } = useAuthStore();
+  const { setRegisterStep, setUserType } = useAuthStore();
 
   return (
     <div>
@@ -18,7 +18,10 @@ const RegisterOne = () => {
         <div className="space-y-6">
           <div className="space-y-2">
             <div
-              onClick={() => setRegisterStep(2)}
+              onClick={() => {
+                setUserType("renter");
+                setRegisterStep(2);
+              }}
               className="border border-[#0C2C43] rounded-2xl px-10 py-[30px] hover:cursor-pointer hover:bg-input/50 transition-all duration-300"
             >
               <RegisterUser />
@@ -28,7 +31,10 @@ const RegisterOne = () => {
 
           <div className="space-y-2 hover:cursor-pointer">
             <div
-              onClick={() => setRegisterStep(2)}
+              onClick={() => {
+                setUserType("owner");
+                setRegisterStep(2);
+              }}
               className="border border-[#0C2C43] rounded-2xl px-10 py-[30px] hover:cursor-pointer hover:bg-input/50 transition-all duration-300"
             >
               <RegisterUser />

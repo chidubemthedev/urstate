@@ -32,7 +32,17 @@ export default function RootLayout({
       >
         <AnalyticsInitializer />
         {children}
-        <Toaster />
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            classNames: {
+              content: "flex flex-col gap-2",
+            },
+            style: {
+              "--border-radius": "calc(var(--radius) + 4px)",
+            } as React.CSSProperties,
+          }}
+        />
       </body>
     </html>
   );

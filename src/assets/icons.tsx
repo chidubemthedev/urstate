@@ -213,16 +213,34 @@ export const RegisterUser = () => (
     <path
       d="M56.6654 28.3337C56.6654 19.1289 49.2034 11.667 39.9987 11.667C30.794 11.667 23.332 19.1289 23.332 28.3337C23.332 37.5383 30.794 45.0003 39.9987 45.0003C49.2034 45.0003 56.6654 37.5383 56.6654 28.3337Z"
       stroke="#0C2C43"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M63.3346 68.3333C63.3346 55.4467 52.888 45 40.0013 45C27.1147 45 16.668 55.4467 16.668 68.3333"
       stroke="#0C2C43"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const EmailShield = () => (
+  <svg
+    width="50"
+    height="52"
+    viewBox="0 0 50 52"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M17 27.7627L23 33.7627L33 19.7627M25 1C18.962 6.73396 10.9207 9.87887 2.59468 9.76267C1.53557 12.9893 0.997269 16.364 1.00001 19.76C1.00001 34.672 11.1973 47.2 25 50.7547C38.8027 47.2027 49 34.6747 49 19.7627C49 16.2693 48.44 12.9067 47.4053 9.76H47C38.4773 9.76 30.7333 6.432 25 1Z"
+      stroke="#D2D2D2"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
