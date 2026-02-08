@@ -66,9 +66,9 @@ const Success = ({ trigger, open, onOpenChange, role }: Props) => {
           {/* Owner: show WhatsApp + Talk button; Manager: only Talk; Renter (default): only WhatsApp */}
           {role === "owner" && (
             <div className="flex flex-col gap-4 w-full">
-              <Link href={"mailto:hello.urstate@gmail.com"} className="w-full">
+              <Link href={"https://bit.ly/listwithurstate"} className="w-full">
                 <Button type="button" size={"lg"} className="w-full h-12">
-                  Talk to our team
+                  List With Us
                 </Button>
               </Link>
 
@@ -99,12 +99,12 @@ const Success = ({ trigger, open, onOpenChange, role }: Props) => {
 
           {(!role || role === "renter") && (
             <Link
-              href={"https://whatsapp.com/channel/0029VbBLLYU1NCrO6ZGIsO1J"}
+              href={"https://bit.ly/findahomewithurstate"}
               target={"_blank"}
               className="w-full"
             >
               <Button type="button" size={"lg"} className="w-full h-12">
-                Join WhatsApp Channel
+                Find a Home
               </Button>
             </Link>
           )}
