@@ -2,6 +2,7 @@ import { GoogleIcon } from "@/assets/icons";
 import LoginForm from "@/components/auth/login-form";
 import ShellPage from "@/components/auth/shell";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const LoginPage = () => {
   return (
@@ -21,7 +22,13 @@ const LoginPage = () => {
         <LoginForm />
         <div className="mt-6">
           <p>
-            Don&apos;t have an account? <span>Sign up.</span>
+            Don&apos;t have an account?{" "}
+            <Link
+              href={"/auth/register"}
+              className="font-bold text-primary hover:underline hover:cursor-pointer underline-offset-2"
+            >
+              Sign up
+            </Link>
           </p>
         </div>
       </div>

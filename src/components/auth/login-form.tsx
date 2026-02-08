@@ -23,6 +23,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { EyeOffIcon } from "lucide-react";
+import { useAuthStore } from "@/store/authStore";
 
 const formSchema = z.object({
   email: z.email("Invalid email address."),
@@ -30,6 +31,8 @@ const formSchema = z.object({
 });
 
 const LoginForm = () => {
+  const { passwordType, setPasswordType } = useAuthStore();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -88,11 +91,19 @@ const LoginForm = () => {
                   <InputGroupInput
                     {...field}
                     id="password"
-                    type="password"
+                    type={passwordType}
                     placeholder="********"
                   />
                   <Tooltip>
-                    <TooltipTrigger asChild className="hover:cursor-pointer">
+                    <TooltipTrigger
+                      asChild
+                      onClick={() =>
+                        setPasswordType(
+                          passwordType === "password" ? "text" : "password",
+                        )
+                      }
+                      className="hover:cursor-pointer"
+                    >
                       <InputGroupAddon align="inline-end">
                         <EyeOffIcon />
                       </InputGroupAddon>

@@ -1,6 +1,9 @@
 import { RegisterUser } from "@/assets/icons";
+import { useAuthStore } from "@/store/authStore";
 
 const RegisterOne = () => {
+  const { setRegisterStep } = useAuthStore();
+
   return (
     <div>
       <div className="w-full flex flex-col items-center justify-center max-w-96 text-center">
@@ -14,14 +17,20 @@ const RegisterOne = () => {
 
         <div className="space-y-6">
           <div className="space-y-2">
-            <div className="border border-[#0C2C43] rounded-2xl px-10 py-[30px] hover:cursor-pointer hover:bg-input/50 transition-all duration-300">
+            <div
+              onClick={() => setRegisterStep(2)}
+              className="border border-[#0C2C43] rounded-2xl px-10 py-[30px] hover:cursor-pointer hover:bg-input/50 transition-all duration-300"
+            >
               <RegisterUser />
             </div>
             <p>Renter</p>
           </div>
 
           <div className="space-y-2 hover:cursor-pointer">
-            <div className="border border-[#0C2C43] rounded-2xl px-10 py-[30px] hover:cursor-pointer hover:bg-input/50 transition-all duration-300">
+            <div
+              onClick={() => setRegisterStep(2)}
+              className="border border-[#0C2C43] rounded-2xl px-10 py-[30px] hover:cursor-pointer hover:bg-input/50 transition-all duration-300"
+            >
               <RegisterUser />
             </div>
             <p>Owner/Manager</p>

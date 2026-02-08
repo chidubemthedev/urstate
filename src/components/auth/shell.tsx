@@ -13,7 +13,7 @@ const ShellPage = ({ children }: Props) => {
         alt="logo"
         className="absolute top-8 left-20"
       />
-      <div className="flex flex-col items-center justify-center px-[100px]">
+      <div className="flex flex-col items-center justify-center px-[100px] min-w-full">
         {children}
       </div>
 
