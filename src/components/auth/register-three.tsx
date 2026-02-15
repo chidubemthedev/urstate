@@ -40,6 +40,20 @@ const RegisterThree = ({ form }: Props) => {
     setConfirmPasswordType,
   } = useAuthStore();
 
+  // watch password fields for live validation
+  const password = form.watch("password") || "";
+  const confirm = form.watch("confirm") || "";
+
+  const checks = {
+    length: password.length >= 8 && password.length <= 32,
+    lower: /[a-z]/.test(password),
+    upper: /[A-Z]/.test(password),
+    number: /[0-9]/.test(password),
+    special: /[^A-Za-z0-9]/.test(password),
+  };
+
+  const allValid = Object.values(checks).every(Boolean) && password === confirm;
+
   return (
     <div className="w-full flex flex-col items-center justify-center max-w-96">
       <div
@@ -86,24 +100,79 @@ const RegisterThree = ({ form }: Props) => {
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
+
                 <div>
                   <p className="mb-1.5">Your password must include:</p>
                   <div className="space-y-1.5">
                     <div className="flex gap-2 items-center">
-                      <CheckIcon />
-                      8-32 characters long
+                      <CheckIcon
+                        className={
+                          checks.length ? "text-green-500" : "text-primary"
+                        }
+                      />
+                      <span
+                        className={
+                          checks.length ? "text-green-500" : "text-primary"
+                        }
+                      >
+                        8-32 characters long
+                      </span>
                     </div>
                     <div className="flex gap-2 items-center">
-                      <CheckIcon />1 lowercase character (a-z)
+                      <CheckIcon
+                        className={
+                          checks.lower ? "text-green-500" : "text-primary"
+                        }
+                      />
+                      <span
+                        className={
+                          checks.lower ? "text-green-500" : "text-primary"
+                        }
+                      >
+                        1 lowercase character (a-z)
+                      </span>
                     </div>
                     <div className="flex gap-2 items-center">
-                      <CheckIcon />1 uppercase character (A-Z)
+                      <CheckIcon
+                        className={
+                          checks.upper ? "text-green-500" : "text-primary"
+                        }
+                      />
+                      <span
+                        className={
+                          checks.upper ? "text-green-500" : "text-primary"
+                        }
+                      >
+                        1 uppercase character (A-Z)
+                      </span>
                     </div>
                     <div className="flex gap-2 items-center">
-                      <CheckIcon />1 number
+                      <CheckIcon
+                        className={
+                          checks.number ? "text-green-500" : "text-primary"
+                        }
+                      />
+                      <span
+                        className={
+                          checks.number ? "text-green-500" : "text-primary"
+                        }
+                      >
+                        1 number
+                      </span>
                     </div>
                     <div className="flex gap-2 items-center">
-                      <CheckIcon />1 special character e.g. ! @ # $ %
+                      <CheckIcon
+                        className={
+                          checks.special ? "text-green-500" : "text-primary"
+                        }
+                      />
+                      <span
+                        className={
+                          checks.special ? "text-green-500" : "text-primary"
+                        }
+                      >
+                        1 special character e.g. ! @ # $ %
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -146,11 +215,30 @@ const RegisterThree = ({ form }: Props) => {
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
+
+                <div className="mt-2">
+                  {confirm.length > 0 && (
+                    <div className="flex items-center gap-2">
+                      {password === confirm ? (
+                        <span className="text-green-500">Passwords match</span>
+                      ) : (
+                        <span className="text-red-500">
+                          Passwords do not match
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
               </Field>
             )}
           />
 
-          <Button type="submit" form="register-form" size={"xl"}>
+          <Button
+            type="submit"
+            form="register-form"
+            size={"xl"}
+            disabled={!allValid}
+          >
             Create Account
           </Button>
         </FieldGroup>

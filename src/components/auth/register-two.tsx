@@ -28,6 +28,12 @@ type Props = {
 const RegisterTwo = ({ form }: Props) => {
   const { setRegisterStep } = useAuthStore();
 
+  // trigger validations for the email and consent fields only
+  const validateStep = async () => {
+    const valid = await form.trigger(["email", "consent"]);
+    if (valid) setRegisterStep(3);
+  };
+
   return (
     <div className="w-full flex flex-col items-center justify-center max-w-96">
       <div
@@ -90,15 +96,15 @@ const RegisterTwo = ({ form }: Props) => {
                     By creating a new account, I accept Urstate Terms &
                     Conditions and Privacy Policy.
                   </FieldLabel>
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
                 </Field>
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
               </FieldGroup>
             )}
           />
 
-          <Button type="button" size={"xl"} onClick={() => setRegisterStep(3)}>
+          <Button type="button" size={"xl"} onClick={validateStep}>
             Continue
           </Button>
         </FieldGroup>

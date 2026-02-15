@@ -18,7 +18,17 @@ const emailSchema = z.object({
 
 const passwordSchema = z
   .object({
-    password: z.string().min(8, "Password must be at least 8 characters."),
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters.")
+      .max(32, "Password must be at most 32 characters.")
+      .regex(/[a-z]/, "Password must contain at least one lowercase letter.")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter.")
+      .regex(/[0-9]/, "Password must contain at least one number.")
+      .regex(
+        /[^A-Za-z0-9]/,
+        "Password must contain at least one special character.",
+      ),
     confirm: z.string().min(8, "Password must be at least 8 characters."),
   })
   .refine((data) => data.password === data.confirm, {
