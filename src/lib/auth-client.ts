@@ -2,7 +2,7 @@ import { createAuthClient } from "better-auth/react";
 import { inferAdditionalFields } from "better-auth/client/plugins";
 
 export const authClient = createAuthClient({
-  baseURL: "http://localhost:3000", // ⚠️ Change to your Render URL in production!
+  baseURL: process.env.BACKEND_URL || "http://localhost:3000",
   plugins: [
     inferAdditionalFields({
       user: {
