@@ -22,8 +22,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { EyeOffIcon } from "lucide-react";
+import { EyeOffIcon, Loader2Icon } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
+import { signIn, authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.email("Invalid email address."),
@@ -31,6 +33,7 @@ const formSchema = z.object({
 });
 
 const LoginForm = () => {
+  const router = useRouter();
   const { passwordType, setPasswordType } = useAuthStore();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -41,30 +44,33 @@ const LoginForm = () => {
     },
   });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log(data);
-    toast("You submitted the following values:", {
-      description: (
-        <pre className="bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4">
-          <code>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-      position: "bottom-right",
-      classNames: {
-        content: "flex flex-col gap-2",
-      },
-      style: {
-        "--border-radius": "calc(var(--radius)  + 4px)",
-      } as React.CSSProperties,
+  const { control, handleSubmit, formState } = form;
+
+  async function onSubmit(data: z.infer<typeof formSchema>) {
+    const { email, password } = data;
+
+    const { error } = await signIn.email({
+      email,
+      password,
     });
+
+    if (error) {
+      // Better Auth returns helpful error messages
+      toast.error(error.message || "Something went wrong");
+    } else {
+      // Success! Redirect to dashboard (or onboarding check)
+      toast.success("Login successful!");
+
+      router.push("/dashboard");
+    }
   }
 
   return (
     <div className="w-full">
-      <form id="login-form" onSubmit={form.handleSubmit(onSubmit)}>
+      <form id="login-form" onSubmit={handleSubmit(onSubmit)}>
         <FieldGroup>
           <Controller
-            control={form.control}
+            control={control}
             name="email"
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
@@ -83,7 +89,7 @@ const LoginForm = () => {
           />
 
           <Controller
-            control={form.control}
+            control={control}
             name="password"
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
@@ -120,8 +126,21 @@ const LoginForm = () => {
             )}
           />
 
-          <Button type="submit" size={"xl"} form="login-form">
-            Login
+          <Button
+            type="submit"
+            size={"xl"}
+            form="login-form"
+            disabled={formState.isSubmitting}
+            aria-busy={formState.isSubmitting}
+          >
+            {formState.isSubmitting ? (
+              <>
+                <Loader2Icon className="size-4 animate-spin" />
+                <span>Logging in...</span>
+              </>
+            ) : (
+              "Login"
+            )}
           </Button>
         </FieldGroup>
       </form>

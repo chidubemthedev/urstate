@@ -8,8 +8,11 @@ import { useAuthStore } from "@/store/authStore";
 import RegisterThree from "./register-three";
 import { useState } from "react";
 import EmailConfirmModal from "./email-confirm-modal";
+import { signUp, signIn } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 const emailSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters."),
   email: z.email("Invalid email address."),
   consent: z.boolean().refine((v) => v === true, {
     message: "You must accept the terms and conditions.",
@@ -45,6 +48,7 @@ const RegisterMain = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
       consent: false,
@@ -52,8 +56,31 @@ const RegisterMain = () => {
     },
   });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: z.infer<typeof formSchema>) {
     console.log({ ...data, userType });
+
+    if (!userType) {
+      console.error("User type is not selected.");
+      return;
+    }
+
+    const { error } = await signUp.email({
+      email: data.email,
+      password: data.password,
+      role: userType,
+      name: data.name,
+    });
+
+    if (error) {
+      toast(error.message);
+    } else {
+      // Success! Usually redirect to a "Verify your email" page
+      setConfirmEmail(true);
+    }
+
+    if (error) {
+      console.error(error);
+    }
   }
 
   const Stepone = <RegisterOne />;

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
 import Form from "../form";
+import Link from "next/link";
 
 const Nav = () => {
   return (
@@ -12,19 +13,16 @@ const Nav = () => {
       <div className="flex md:hidden">
         <Image src={"/images/logo.png"} width={120} height={28} alt="logo" />
       </div>
-      <Form
-        trigger={
-          <DialogTrigger asChild>
-            <Button
-              size={"lg"}
-              variant={"outline"}
-              className="border border-[#0C2C43] hidden md:flex"
-            >
-              Join our Waitlist
-            </Button>
-          </DialogTrigger>
-        }
-      />
+
+      <Link href={"/auth/login"}>
+        <Button
+          size={"lg"}
+          variant={"outline"}
+          className="border border-[#0C2C43] hidden md:flex"
+        >
+          Sign In
+        </Button>
+      </Link>
 
       <Form
         trigger={

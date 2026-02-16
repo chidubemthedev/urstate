@@ -16,11 +16,12 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { CheckIcon, EyeOffIcon } from "lucide-react";
+import { CheckIcon, EyeOffIcon, Loader2Icon } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { ArrowLeft } from "lucide-react";
 
 type FormValues = {
+  name: string;
   email: string;
   consent: boolean;
   password: string;
@@ -239,7 +240,14 @@ const RegisterThree = ({ form }: Props) => {
             size={"xl"}
             disabled={!allValid}
           >
-            Create Account
+            {form.formState.isSubmitting ? (
+              <>
+                <Loader2Icon className="size-4 animate-spin" />
+                <span>Creating in...</span>
+              </>
+            ) : (
+              "Create Account"
+            )}
           </Button>
         </FieldGroup>
         <p className="mt-6 text-center">

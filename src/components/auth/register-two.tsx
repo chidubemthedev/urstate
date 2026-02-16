@@ -8,13 +8,14 @@ import {
 import { Controller, UseFormReturn } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-
+import { signIn } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store/authStore";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 type FormValues = {
+  name: string;
   email: string;
   consent: boolean;
   password: string;
@@ -30,8 +31,15 @@ const RegisterTwo = ({ form }: Props) => {
 
   // trigger validations for the email and consent fields only
   const validateStep = async () => {
-    const valid = await form.trigger(["email", "consent"]);
+    const valid = await form.trigger(["name", "email", "consent"]);
     if (valid) setRegisterStep(3);
+  };
+
+  const handleGoogleSignUp = async () => {
+    await signIn.social({
+      provider: "google",
+      callbackURL: "http://localhost:4000/auth/choose-role", // We check for missing role here later
+    });
   };
 
   return (
@@ -45,6 +53,7 @@ const RegisterTwo = ({ form }: Props) => {
       <Button
         size={"xl"}
         variant={"outline"}
+        onClick={handleGoogleSignUp}
         className="w-full text-primary border border-primary"
       >
         <GoogleIcon />
@@ -56,6 +65,25 @@ const RegisterTwo = ({ form }: Props) => {
       <p>Enter your email to sign up.</p>
       <div className="w-full text-start mt-8">
         <FieldGroup>
+          <Controller
+            control={form.control}
+            name="name"
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor="name">Name</FieldLabel>
+                <Input
+                  {...field}
+                  id="name"
+                  type="text"
+                  placeholder="John Doe"
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+
           <Controller
             control={form.control}
             name="email"

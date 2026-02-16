@@ -1,10 +1,19 @@
+"use client";
 import { GoogleIcon } from "@/assets/icons";
 import LoginForm from "@/components/auth/login-form";
 import ShellPage from "@/components/auth/shell";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { signIn } from "@/lib/auth-client";
 
 const LoginPage = () => {
+  const handleGoogleLogin = async () => {
+    await signIn.social({
+      provider: "google",
+      callbackURL: "http://localhost:4000/dashboard",
+    });
+  };
+
   return (
     <ShellPage>
       <div className="w-full flex flex-col items-center justify-center max-w-96">
@@ -12,6 +21,7 @@ const LoginPage = () => {
           size={"xl"}
           variant={"outline"}
           className="w-full text-primary border border-primary"
+          onClick={handleGoogleLogin}
         >
           <GoogleIcon />
           Continue with Google
