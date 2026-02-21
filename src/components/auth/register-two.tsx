@@ -36,7 +36,6 @@ const RegisterTwo = ({ form }: Props) => {
   };
 
   const handleGoogleSignUp = async () => {
-    setRegisterStep(3); // Move to next step to show loading
     const { setIsLoading } = useAuthStore.getState();
     setIsLoading(true);
     try {
