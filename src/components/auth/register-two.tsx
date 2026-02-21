@@ -36,11 +36,20 @@ const RegisterTwo = ({ form }: Props) => {
   };
 
   const handleGoogleSignUp = async () => {
-    await signIn.social({
-      provider: "google",
-      callbackURL: "http://localhost:4000/auth/choose-role", // We check for missing role here later
-    });
+    setRegisterStep(3); // Move to next step to show loading
+    const { setIsLoading } = useAuthStore.getState();
+    setIsLoading(true);
+    try {
+      await signIn.social({
+        provider: "google",
+        callbackURL: "http://localhost:4000/auth/choose-role",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  const { isLoading } = useAuthStore();
 
   return (
     <div className="w-full flex flex-col items-center justify-center max-w-96">
@@ -51,13 +60,15 @@ const RegisterTwo = ({ form }: Props) => {
         <ArrowLeft /> Go Back
       </div>
       <Button
+        type="button"
         size={"xl"}
         variant={"outline"}
         onClick={handleGoogleSignUp}
+        disabled={isLoading}
         className="w-full text-primary border border-primary"
       >
         <GoogleIcon />
-        Signup with Google
+        {isLoading ? "Signing up..." : "Signup with Google"}
       </Button>
       <h1 className="text-primary text-[26px] leading-10 font-bold text-center pt-8">
         Create Your Account

@@ -83,6 +83,13 @@ const RegisterMain = () => {
     }
   }
 
+  const resetForm = () => {
+    const { resetRegistration } = useAuthStore.getState();
+    resetRegistration();
+    form.reset();
+    setConfirmEmail(false);
+  };
+
   const Stepone = <RegisterOne />;
 
   const Steptwo = <RegisterTwo form={form} />;

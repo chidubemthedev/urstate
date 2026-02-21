@@ -17,7 +17,10 @@ interface AuthState {
   setPasswordType: (passwordType: "password" | "text") => void;
   confirmPasswordType: "password" | "text";
   setConfirmPasswordType: (confirmPasswordType: "password" | "text") => void;
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
   logout: () => void;
+  resetRegistration: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -38,7 +41,17 @@ export const useAuthStore = create<AuthState>()(
       confirmPasswordType: "password",
       setConfirmPasswordType: (confirmPasswordType) =>
         set({ confirmPasswordType }),
+      isLoading: false,
+      setIsLoading: (isLoading) => set({ isLoading }),
       logout: () => set({ user: null, token: null, refreshToken: null }),
+      resetRegistration: () =>
+        set({
+          registerStep: 1,
+          userType: null,
+          isLoading: false,
+          passwordType: "password",
+          confirmPasswordType: "password",
+        }),
     }),
     {
       name: "auth-storage", // LocalStorage key
