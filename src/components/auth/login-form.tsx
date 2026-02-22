@@ -1,9 +1,11 @@
 "use client";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
+import ForgotPasswordModal from "./forgot-password-modal";
 import {
   Field,
   FieldDescription,
@@ -35,6 +37,7 @@ const formSchema = z.object({
 const LoginForm = () => {
   const router = useRouter();
   const { passwordType, setPasswordType } = useAuthStore();
+  const [showForgotModal, setShowForgotModal] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -121,7 +124,14 @@ const LoginForm = () => {
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
-                <FieldDescription>Forgot password?</FieldDescription>
+                <FieldDescription>
+                  <span
+                    className="text-primary hover:underline hover:cursor-pointer"
+                    onClick={() => setShowForgotModal(true)}
+                  >
+                    Forgot password?
+                  </span>
+                </FieldDescription>
               </Field>
             )}
           />
@@ -144,6 +154,9 @@ const LoginForm = () => {
           </Button>
         </FieldGroup>
       </form>
+      {showForgotModal && (
+        <ForgotPasswordModal setShowForgotModal={setShowForgotModal} />
+      )}
     </div>
   );
 };
