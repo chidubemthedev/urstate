@@ -2,14 +2,9 @@
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import { Loader2Icon } from "lucide-react";
+import { Loader2Icon, EyeOffIcon, CheckIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
@@ -20,7 +15,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { EyeOffIcon, CheckIcon } from "lucide-react";
 
 const ResetPasswordPage = () => {
   const router = useRouter();
@@ -31,9 +25,9 @@ const ResetPasswordPage = () => {
   const [confirm, setConfirm] = useState("");
   const [passwordType, setPasswordType] = useState("password");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
+
+  // Removed "error" from here so we can keep the user on the form to retry
+  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
   const checks = {
@@ -48,25 +42,39 @@ const ResetPasswordPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!token) {
+      setErrorMsg(
+        "Missing reset token. Please request a new password reset link.",
+      );
+      return;
+    }
+
     setStatus("loading");
     setErrorMsg("");
+
     try {
+      // FIX: The correct Better Auth payload
       const { error } = await authClient.resetPassword({
-        query: { token },
-        body: { password },
+        newPassword: password,
+        token: token, // Pass the extracted token directly
       });
+
       if (error) {
-        setStatus("error");
-        setErrorMsg(error.message || "Something went wrong.");
+        setStatus("idle"); // Go back to idle so they can click the button again
+        setErrorMsg(
+          error.message ||
+            "Failed to reset password. The link may have expired.",
+        );
       } else {
         setStatus("success");
         setTimeout(() => {
-          router.push("/auth/login");
+          router.push("/auth/login"); // Or wherever your login page is
         }, 3000);
       }
     } catch (err) {
-      setStatus("error");
-      setErrorMsg("Something went wrong.");
+      setStatus("idle");
+      setErrorMsg("Something went wrong. Please try again.");
     }
   };
 
@@ -90,21 +98,20 @@ const ResetPasswordPage = () => {
     );
   }
 
-  if (status === "error") {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl font-bold text-red-600">Reset Failed</h1>
-        <p>{errorMsg}</p>
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-primary text-[26px] leading-10 font-bold text-center mb-6">
           Reset Password
         </h1>
+
+        {/* Added error message display here */}
+        {errorMsg && (
+          <div className="mb-6 p-3 bg-red-50 text-red-600 rounded-md text-sm text-center">
+            {errorMsg}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit}>
           <FieldGroup>
             <Field>
@@ -119,7 +126,7 @@ const ResetPasswordPage = () => {
                 />
                 <Tooltip>
                   <TooltipTrigger
-                    asChild
+                    type="button" // Prevent accidental form submission
                     onClick={() =>
                       setPasswordType(
                         passwordType === "password" ? "text" : "password",
@@ -134,18 +141,19 @@ const ResetPasswordPage = () => {
                   <TooltipContent>View Password</TooltipContent>
                 </Tooltip>
               </InputGroup>
-              <div>
-                <p className="mb-1.5">Your password must include:</p>
-                <div className="space-y-1.5">
+
+              <div className="mt-2">
+                <p className="mb-1.5 text-sm text-gray-600">
+                  Your password must include:
+                </p>
+                <div className="space-y-1.5 text-sm">
                   <div className="flex gap-2 items-center">
                     <CheckIcon
-                      className={
-                        checks.length ? "text-green-500" : "text-primary"
-                      }
+                      className={`size-4 ${checks.length ? "text-green-500" : "text-gray-400"}`}
                     />
                     <span
                       className={
-                        checks.length ? "text-green-500" : "text-primary"
+                        checks.length ? "text-green-500" : "text-gray-600"
                       }
                     >
                       8-32 characters long
@@ -153,13 +161,11 @@ const ResetPasswordPage = () => {
                   </div>
                   <div className="flex gap-2 items-center">
                     <CheckIcon
-                      className={
-                        checks.lower ? "text-green-500" : "text-primary"
-                      }
+                      className={`size-4 ${checks.lower ? "text-green-500" : "text-gray-400"}`}
                     />
                     <span
                       className={
-                        checks.lower ? "text-green-500" : "text-primary"
+                        checks.lower ? "text-green-500" : "text-gray-600"
                       }
                     >
                       1 lowercase character (a-z)
@@ -167,13 +173,11 @@ const ResetPasswordPage = () => {
                   </div>
                   <div className="flex gap-2 items-center">
                     <CheckIcon
-                      className={
-                        checks.upper ? "text-green-500" : "text-primary"
-                      }
+                      className={`size-4 ${checks.upper ? "text-green-500" : "text-gray-400"}`}
                     />
                     <span
                       className={
-                        checks.upper ? "text-green-500" : "text-primary"
+                        checks.upper ? "text-green-500" : "text-gray-600"
                       }
                     >
                       1 uppercase character (A-Z)
@@ -181,13 +185,11 @@ const ResetPasswordPage = () => {
                   </div>
                   <div className="flex gap-2 items-center">
                     <CheckIcon
-                      className={
-                        checks.number ? "text-green-500" : "text-primary"
-                      }
+                      className={`size-4 ${checks.number ? "text-green-500" : "text-gray-400"}`}
                     />
                     <span
                       className={
-                        checks.number ? "text-green-500" : "text-primary"
+                        checks.number ? "text-green-500" : "text-gray-600"
                       }
                     >
                       1 number
@@ -195,13 +197,11 @@ const ResetPasswordPage = () => {
                   </div>
                   <div className="flex gap-2 items-center">
                     <CheckIcon
-                      className={
-                        checks.special ? "text-green-500" : "text-primary"
-                      }
+                      className={`size-4 ${checks.special ? "text-green-500" : "text-gray-400"}`}
                     />
                     <span
                       className={
-                        checks.special ? "text-green-500" : "text-primary"
+                        checks.special ? "text-green-500" : "text-gray-600"
                       }
                     >
                       1 special character e.g. ! @ # $ %
@@ -210,7 +210,8 @@ const ResetPasswordPage = () => {
                 </div>
               </div>
             </Field>
-            <Field>
+
+            <Field className="mt-4">
               <FieldLabel htmlFor="confirm">Confirm Password</FieldLabel>
               <InputGroup>
                 <InputGroupInput
@@ -222,7 +223,7 @@ const ResetPasswordPage = () => {
                 />
                 <Tooltip>
                   <TooltipTrigger
-                    asChild
+                    type="button" // Prevent accidental form submission
                     onClick={() =>
                       setConfirmPasswordType(
                         confirmPasswordType === "password"
@@ -239,7 +240,7 @@ const ResetPasswordPage = () => {
                   <TooltipContent>View Password</TooltipContent>
                 </Tooltip>
               </InputGroup>
-              <div className="mt-2">
+              <div className="mt-2 text-sm">
                 {confirm.length > 0 && (
                   <div className="flex items-center gap-2">
                     {password === confirm ? (
@@ -253,7 +254,13 @@ const ResetPasswordPage = () => {
                 )}
               </div>
             </Field>
-            <Button type="submit" size="xl" disabled={!allValid}>
+
+            <Button
+              type="submit"
+              size="xl"
+              className="w-full mt-6"
+              disabled={!allValid}
+            >
               Reset Password
             </Button>
           </FieldGroup>
