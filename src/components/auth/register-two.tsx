@@ -41,7 +41,7 @@ const RegisterTwo = ({ form }: Props) => {
     try {
       await signIn.social({
         provider: "google",
-        callbackURL: "http://localhost:4000/auth/choose-role",
+        callbackURL: "http://localhost:4000/choose-role",
       });
     } finally {
       setIsLoading(false);
@@ -149,7 +149,7 @@ const RegisterTwo = ({ form }: Props) => {
         <p className="mt-6 text-center">
           Already have an account?{" "}
           <Link
-            href={"/auth/login"}
+            href={"/login"}
             className="font-bold text-primary hover:underline hover:cursor-pointer underline-offset-2"
           >
             Sign in

@@ -14,7 +14,7 @@ const Nav = () => {
         <Image src={"/images/logo.png"} width={120} height={28} alt="logo" />
       </div>
 
-      <Link href={"/auth/login"}>
+      <Link href={"/login"}>
         <Button
           size={"lg"}
           variant={"outline"}

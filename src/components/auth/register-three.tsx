@@ -19,6 +19,7 @@ import {
 import { CheckIcon, EyeOffIcon, Loader2Icon } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 type FormValues = {
   name: string;
@@ -252,9 +253,12 @@ const RegisterThree = ({ form }: Props) => {
         </FieldGroup>
         <p className="mt-6 text-center">
           Already have an account?{" "}
-          <span className="font-bold text-primary hover:underline hover:cursor-pointer">
+          <Link
+            href={"/login"}
+            className="font-bold text-primary hover:underline hover:cursor-pointer underline-offset-2"
+          >
             Sign in
-          </span>
+          </Link>
         </p>
       </div>
     </div>
