@@ -2,8 +2,12 @@
 
 import { useSession } from "@/lib/auth-client";
 import { Bell } from "lucide-react";
-import type { NavItem } from "@/lib/navigation";
-import { OWNER_NAV, RENTER_NAV } from "@/lib/navigation";
+import {
+  OWNER_BOTTOM_NAV,
+  OWNER_TOP_NAV,
+  RENTER_BOTTOM_NAV,
+  RENTER_TOP_NAV,
+} from "@/lib/navigation";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./app-sidebar";
 
@@ -17,17 +21,18 @@ export default function DashboardShell({
   role,
 }: DashboardShellProps) {
   const { data: session } = useSession();
-  const navItems = role === "owner" ? OWNER_NAV : RENTER_NAV;
+  const topNav = role === "owner" ? OWNER_TOP_NAV : RENTER_TOP_NAV;
+  const bottomNav = role === "owner" ? OWNER_BOTTOM_NAV : RENTER_BOTTOM_NAV;
 
   return (
     <SidebarProvider>
       {/* The Responsive Sidebar */}
-      <AppSidebar navItems={navItems} />
+      <AppSidebar topNav={topNav} bottomNav={bottomNav} />
 
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-h-screen overflow-hidden bg-gray-50">
         {/* Top Header */}
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b bg-white px-4">
+        <header className="flex h-20 shrink-0 items-center gap-2 border-b border-[#D2D2D2] border-[0.5px] px-4">
           {/* This trigger automatically handles opening/closing the sidebar on mobile/desktop */}
           <SidebarTrigger className="-ml-1 text-[#227CBD]" />
 
