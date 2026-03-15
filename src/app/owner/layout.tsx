@@ -24,5 +24,5 @@ export default async function OwnerLayout({
   if (!session.user.role) redirect("/onboarding");
   if (session.user.role !== "owner") redirect("/renter/dashboard");
 
-  return <DashboardShell navItems={OWNER_NAV}>{children}</DashboardShell>;
+  return <DashboardShell role="owner">{children}</DashboardShell>;
 }

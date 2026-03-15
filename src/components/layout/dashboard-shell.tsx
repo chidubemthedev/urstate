@@ -3,20 +3,21 @@
 import { useSession } from "@/lib/auth-client";
 import { Bell } from "lucide-react";
 import type { NavItem } from "@/lib/navigation";
-
+import { OWNER_NAV, RENTER_NAV } from "@/lib/navigation";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./app-sidebar";
 
 interface DashboardShellProps {
   children: React.ReactNode;
-  navItems: NavItem[];
+  role: "owner" | "renter";
 }
 
 export default function DashboardShell({
   children,
-  navItems,
+  role,
 }: DashboardShellProps) {
   const { data: session } = useSession();
+  const navItems = role === "owner" ? OWNER_NAV : RENTER_NAV;
 
   return (
     <SidebarProvider>

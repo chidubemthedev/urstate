@@ -21,5 +21,5 @@ export default async function RenterLayout({
   if (!session.user.role) redirect("/onboarding");
   if (session.user.role !== "renter") redirect("/owner/dashboard");
 
-  return <DashboardShell navItems={RENTER_NAV}>{children}</DashboardShell>;
+  return <DashboardShell role="renter">{children}</DashboardShell>;
 }
