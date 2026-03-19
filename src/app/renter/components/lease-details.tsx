@@ -12,9 +12,9 @@ import {
 import type { Lease } from "@/types/property";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useLeaseStore } from "@/store/useLeaseStore";
 import { LeaseTimeline } from "@/app/renter/components/lease-timeline";
 import { CautionFeeCard } from "@/app/renter/components/caution-fee-card";
+import Link from "next/link";
 
 const InfoText = ({ children }: { children: React.ReactNode }) => (
   <span className="text-sm text-gray-500">{children}</span>
@@ -45,18 +45,15 @@ interface LeaseDetailsProps {
 }
 
 export function LeaseDetails({ lease }: LeaseDetailsProps) {
-  const clearSelection = useLeaseStore((state) => state.clearSelection);
   const { property } = lease;
 
   return (
     <div className="max-w-[1200px] mx-auto p-4 md:p-8 space-y-8">
-      <Button
-        variant="ghost"
-        onClick={clearSelection}
-        className="gap-2 text-gray-600 pl-0"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back to Dashboard
+      <Button variant="ghost" asChild className="gap-2 text-gray-600 pl-0">
+        <Link href="/renter/dashboard">
+          <ArrowLeft className="w-4 h-4" />
+          Go Back
+        </Link>
       </Button>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

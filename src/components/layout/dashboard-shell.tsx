@@ -66,7 +66,9 @@ export default function DashboardShell({
         </header>
 
         {/* Page Content */}
-        <div className="flex-1 overflow-auto p-4 md:p-8">{children}</div>
+        <div className="flex-1 overflow-auto p-4 md:px-7 md:py-10">
+          {children}
+        </div>
       </main>
     </SidebarProvider>
   );

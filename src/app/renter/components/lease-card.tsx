@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLeaseStore } from "@/store/useLeaseStore";
+import Link from "next/link";
 
 // ✅ MOVED OUTSIDE: Prevents re-render destruction
 const DetailText = ({ children }: { children: React.ReactNode }) => (
@@ -77,11 +78,11 @@ export function LeaseCard({ lease }: LeaseCardProps) {
           </div>
 
           <Button
+            asChild // 👈 This tells shadcn to render the <Link> as a Button
             size="lg"
-            className="w-full bg-[#102A43] text-white hover:bg-[#081B2E] rounded-[10px]"
-            onClick={() => selectLease(lease.id)}
+            className="w-full bg-[#102A43] text-white hover:bg-[#081B2E] rounded-[10px] h-14"
           >
-            Manage
+            <Link href={`/renter/dashboard/${lease.id}`}>Manage</Link>
           </Button>
         </div>
       </CardContent>
