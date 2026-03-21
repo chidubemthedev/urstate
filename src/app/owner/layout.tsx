@@ -1,5 +1,4 @@
 import DashboardShell from "@/components/layout/dashboard-shell";
-import { OWNER_NAV } from "@/lib/navigation";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { authClient } from "@/lib/auth-client"; // Use the client, not the server auth
