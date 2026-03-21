@@ -5,8 +5,8 @@ const UNSPLASH_IMAGES = [
   "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
   "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde",
   "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c",
-  "https://images.unsplash.com/photo-1613498382159-0972b7b4c9f1",
-  "https://images.unsplash.com/photo-1613977257363-707ba934f246",
+  "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf",
+  "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
 ];
 
 // Reusable Lagos address for testing
@@ -64,9 +64,9 @@ export const MOCK_LEASES: Lease[] = [
     verified: false,
   },
   {
-    id: "lease_2",
+    id: "lease_3",
     property: {
-      id: "prop_2",
+      id: "prop_3",
       name: "Standard Urban Apartment",
       address: "123 Victory Street, Victoria Island, Lagos.",
       tags: ["Estate", "Urban area"],
@@ -86,9 +86,9 @@ export const MOCK_LEASES: Lease[] = [
     verified: false,
   },
   {
-    id: "lease_2",
+    id: "lease_4",
     property: {
-      id: "prop_2",
+      id: "prop_4",
       name: "Standard Urban Apartment",
       address: "123 Victory Street, Victoria Island, Lagos.",
       tags: ["Estate", "Urban area"],
@@ -108,9 +108,9 @@ export const MOCK_LEASES: Lease[] = [
     verified: false,
   },
   {
-    id: "lease_2",
+    id: "lease_5",
     property: {
-      id: "prop_2",
+      id: "prop_5",
       name: "Standard Urban Apartment",
       address: "123 Victory Street, Victoria Island, Lagos.",
       tags: ["Estate", "Urban area"],

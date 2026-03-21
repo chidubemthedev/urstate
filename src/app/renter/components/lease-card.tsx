@@ -1,16 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { House, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
+import { House, CheckCircle2, Shield, ShieldCheck, Home } from "lucide-react";
 import type { Lease } from "@/types/property";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Card, CardContent } from "@/components/ui/card";
-import { useLeaseStore } from "@/store/useLeaseStore";
 import Link from "next/link";
 
-// ✅ MOVED OUTSIDE: Prevents re-render destruction
 const DetailText = ({ children }: { children: React.ReactNode }) => (
   <span className="text-sm text-gray-500">{children}</span>
 );
@@ -22,44 +20,44 @@ interface LeaseCardProps {
 
 export function LeaseCard({ lease }: LeaseCardProps) {
   const { property } = lease;
-  const selectLease = useLeaseStore((state) => state.selectLease);
 
   return (
-    <Card className="w-full max-w-[380px] rounded-[18px] shadow-sm border border-gray-100 overflow-hidden group">
-      {/* ... (Keep the exact same JSX return from the previous LeaseCard) ... */}
-      <CardContent className="p-0">
+    <Card className="w-full max-w-[380px] rounded-2xl bg-white border border-[#D2D2D2] overflow-hidden group py-0">
+      <CardContent className="p-[11px]">
         <div className="relative w-full">
           <AspectRatio ratio={16 / 10}>
             <Image
               src={property.images[0]}
               alt={property.name}
               fill
-              className="object-cover"
+              className="object-cover rounded-[8px]"
               sizes="(max-w-768px) 100vw, 380px"
               priority={lease.id === "lease_1"}
             />
           </AspectRatio>
           {lease.verified && (
             <Badge className="absolute top-4 left-4 bg-white/90 text-[#34A853] flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold">
-              <CheckCircle2 className="w-4 h-4" />
+              <ShieldCheck className="w-4 h-4" />
               Verified
             </Badge>
           )}
         </div>
 
-        <div className="p-6 pt-5 space-y-4">
-          <div className="flex items-center gap-2.5 text-[#34A853]">
-            <House className="w-5 h-5" />
-            <span className="text-xs font-medium uppercase tracking-wide">
+        <div className="p-1 pt-2 space-y-4">
+          <div className="flex items-center gap-1 text-[#34A853]">
+            <Home className="w-3 h-3" />
+            <span className="text-[10px] uppercase leading-[18px] tracking-wide mt-0.5">
               Ongoing Lease
             </span>
           </div>
 
-          <h3 className="text-2xl font-bold text-[#102A43]">{property.name}</h3>
-          <p className="text-sm text-gray-500 leading-relaxed max-w-[320px]">
+          <h3 className="text-[18px] leading-6 font-bold text-primary/500">
+            {property.name}
+          </h3>
+          <p className="text-sm text-[#606060] leading-5 line-clamp-1">
             {property.address}
           </p>
-          <p className="text-3xl font-extrabold text-[#102A43]">
+          <p className="text-[18px] leading-6 font-bold text-primary/500">
             {lease.rentAmountFormatted}
           </p>
 
