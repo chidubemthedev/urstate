@@ -29,7 +29,7 @@ const ActionButton = ({
   title: string;
 }) => (
   <Card className="bg-[#F6FBD6] border border-[#E9F4A8] rounded-xl hover:bg-[#EFF7B8] transition-colors cursor-pointer">
-    <CardContent className="flex items-center justify-between p-5 h-16">
+    <CardContent className="flex items-center justify-between p-5 h-10">
       <div className="flex items-center gap-3">
         <Icon className="w-5 h-5 text-[#8CB13B]" />
         <span className="text-base font-medium text-gray-800">{title}</span>
@@ -101,10 +101,10 @@ export function LeaseDetails({ lease }: LeaseDetailsProps) {
         </div>
 
         <div className="lg:col-span-1">
-          <Card className="rounded-2xl border border-gray-100 shadow-sm p-8 space-y-8 sticky top-20">
+          <Card className="rounded-xl border-[0.5px] border-[#D2D2D2] p-8 space-y-8 sticky shadow-none">
             <div className="space-y-3">
-              <p className="text-sm font-medium text-gray-500">Rent Price</p>
-              <p className="text-5xl font-extrabold text-[#102A43] tracking-tight">
+              <p className="text-sm text-[#333333]">Rent Price</p>
+              <p className="text-5xl font-bold text-primary/500 leading-8 tracking-tight">
                 {lease.rentAmountFormatted}
               </p>
             </div>
