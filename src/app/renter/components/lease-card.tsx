@@ -1,7 +1,5 @@
-"use client";
-
 import Image from "next/image";
-import { House, CheckCircle2, Shield, ShieldCheck, Home } from "lucide-react";
+import { ShieldCheck, Home, DotIcon } from "lucide-react";
 import type { Lease } from "@/types/property";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -12,7 +10,7 @@ import Link from "next/link";
 const DetailText = ({ children }: { children: React.ReactNode }) => (
   <span className="text-sm text-gray-500">{children}</span>
 );
-const DotSeparator = () => <span className="text-gray-300 px-1.5">•</span>;
+const DotSeparator = () => <DotIcon />;
 
 interface LeaseCardProps {
   lease: Lease;
@@ -61,7 +59,7 @@ export function LeaseCard({ lease }: LeaseCardProps) {
             {lease.rentAmountFormatted}
           </p>
 
-          <div className="flex items-center text-sm text-gray-500">
+          <div className="flex flex-wrap items-center text-sm text-gray-500">
             <DetailText>{lease.duration}</DetailText>
             <DotSeparator />
             <DetailText>{lease.type}</DetailText>
@@ -76,7 +74,7 @@ export function LeaseCard({ lease }: LeaseCardProps) {
           </div>
 
           <Button
-            asChild // 👈 This tells shadcn to render the <Link> as a Button
+            asChild
             size="lg"
             className="w-full bg-[#102A43] text-white hover:bg-[#081B2E] rounded-[10px] h-14"
           >
