@@ -188,9 +188,10 @@ export function ImageGallery({ images }: ImageGalleryProps) {
                     src={images[currentIndex]}
                     alt={`Property view ${currentIndex + 1}`}
                     fill
-                    className="object-contain drop-shadow-2xl"
+                    className="object-contain drop-shadow-2xl select-none"
                     sizes="(max-w-1024px) 100vw, 1200px"
                     priority
+                    draggable={false}
                   />
                 </div>
               </motion.div>
