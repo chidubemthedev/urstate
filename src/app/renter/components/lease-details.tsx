@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { LeaseTimeline } from "@/app/renter/components/lease-timeline";
 import { CautionFeeCard } from "@/app/renter/components/caution-fee-card";
+import { ImageGallery } from "@/components/shared/image-gallery";
 import Link from "next/link";
 
 const InfoText = ({ children }: { children: React.ReactNode }) => (
@@ -59,7 +60,7 @@ export function LeaseDetails({ lease }: LeaseDetailsProps) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           {/* Image Gallery (Recreating the grid exactly) */}
-          <div className="grid grid-cols-3 gap-4 h-[400px]">
+          {/* <div className="grid grid-cols-3 gap-4 h-[400px]">
             <div className="col-span-2 relative h-full">
               <Image
                 src={property.images[0]}
@@ -92,7 +93,9 @@ export function LeaseDetails({ lease }: LeaseDetailsProps) {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
+
+          <ImageGallery images={property.images} />
 
           <div className="space-y-6">
             <div className="flex items-center gap-2.5 text-[#34A853]">
