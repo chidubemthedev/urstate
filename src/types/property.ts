@@ -22,3 +22,21 @@ export interface Lease {
   monthsBeforeExpire: number; // e.g., 11
   verified: boolean;
 }
+
+export interface BrowseProperty {
+  id: string;
+  name: string;
+  address: string;
+  images: string[];
+  price: number;
+  priceFormatted: string;
+  category: "Long term" | "Shortlet" | "BNB";
+  type: string;
+  beds: number;
+  baths: number;
+  furnished: boolean;
+  verified: boolean;
+  status: "Available" | "Occupied";
+  listedAt: string;
+  isWishlisted: boolean;
+}
