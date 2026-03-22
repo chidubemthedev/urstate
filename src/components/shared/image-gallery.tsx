@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+// ✅ Using the updated modern Framer Motion imports
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft, ChevronRight, X, ImageIcon } from "lucide-react";
 
@@ -15,12 +16,10 @@ interface ImageGalleryProps {
 export function ImageGallery({ images }: ImageGalleryProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(0); // Tracks slide direction
+  const [direction, setDirection] = useState(0);
 
-  // Safety check: if no images, return null
   if (!images || images.length === 0) return null;
 
-  // --- Handlers ---
   const openLightbox = (index: number) => {
     setCurrentIndex(index);
     setIsOpen(true);
@@ -28,7 +27,6 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 
   const paginate = (newDirection: number) => {
     setDirection(newDirection);
-    // Calculate new index wrapping around the array
     setCurrentIndex((prev) => {
       let nextIndex = prev + newDirection;
       if (nextIndex < 0) nextIndex = images.length - 1;
@@ -37,7 +35,6 @@ export function ImageGallery({ images }: ImageGalleryProps) {
     });
   };
 
-  // --- Framer Motion Animation Variants ---
   const slideVariants = {
     enter: (direction: number) => ({
       x: direction > 0 ? 1000 : -1000,
@@ -62,9 +59,8 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 
   return (
     <>
-      {/* --- 1. THE GRID UI --- */}
+      {/* --- 1. THE GRID UI (Unchanged) --- */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-[300px] md:h-[400px]">
-        {/* Main Large Image (Index 0) */}
         <div
           className="md:col-span-2 relative h-full cursor-pointer group overflow-hidden rounded-xl"
           onClick={() => openLightbox(0)}
@@ -80,10 +76,8 @@ export function ImageGallery({ images }: ImageGalleryProps) {
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
         </div>
 
-        {/* Side Stacked Images (Index 1 and 2) */}
         {images.length > 1 && (
           <div className="hidden md:grid grid-rows-2 gap-4 h-full">
-            {/* Top Right Image (Index 1) */}
             <div
               className="relative h-full cursor-pointer group overflow-hidden rounded-xl"
               onClick={() => openLightbox(1)}
@@ -98,7 +92,6 @@ export function ImageGallery({ images }: ImageGalleryProps) {
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
             </div>
 
-            {/* Bottom Right Image (Index 2) */}
             {images.length > 2 && (
               <div
                 className="relative h-full cursor-pointer group overflow-hidden rounded-xl"
@@ -113,14 +106,13 @@ export function ImageGallery({ images }: ImageGalleryProps) {
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
 
-                {/* Conditionally render "View all photos" button */}
                 {images.length > 3 && (
                   <Button
                     variant="secondary"
-                    className="absolute bottom-4 right-4 gap-2 bg-white/95 hover:bg-white text-gray-900 rounded-lg shadow-md transition-all z-10"
+                    className="absolute bottom-4 right-4 gap-2 bg-white/95 hover:bg-white text-gray-900 rounded-lg shadow-md z-10"
                     onClick={(e) => {
-                      e.stopPropagation(); // Prevent firing the image click
-                      openLightbox(3); // Open starting at the 4th image
+                      e.stopPropagation();
+                      openLightbox(3);
                     }}
                   >
                     <ImageIcon className="w-4 h-4" />
@@ -135,34 +127,33 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 
       {/* --- 2. THE LIGHTBOX MODAL --- */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        {/* We use a custom overlay/content style to make it full screen and dark */}
-        <DialogContent className="max-w-[100vw] h-[100dvh] p-0 border-none bg-black/95 m-0 rounded-none shadow-none flex flex-col justify-center overflow-hidden">
-          {/* Accessible Title (Required by Radix/shadcn, visually hidden) */}
+        <DialogContent className="max-w-7xl min-w-[95vw] h-[90vh] bg-transparent border-none shadow-none flex items-center justify-center p-0">
           <DialogTitle className="sr-only">Property Image Gallery</DialogTitle>
 
-          {/* Top Bar (Counter and Close) */}
-          <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center z-50 text-white">
-            <span className="text-sm font-medium tracking-widest opacity-80">
+          {/* Top Info Bar */}
+          <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center z-50">
+            <div className="px-4 py-1.5 bg-black/50 backdrop-blur-md text-white rounded-full text-sm font-medium tracking-widest">
               {currentIndex + 1} / {images.length}
-            </span>
+            </div>
+
             <button
               onClick={() => setIsOpen(false)}
-              className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+              className="p-2.5 rounded-full bg-black/50 backdrop-blur-md hover:bg-black/70 transition-colors text-white"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Navigation Prev Button */}
+          {/* Prev Button (Desktop) */}
           <button
-            className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors z-50 text-white hidden md:block"
+            className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 backdrop-blur-md hover:bg-black/70 transition-colors z-50 text-white hidden md:block"
             onClick={() => paginate(-1)}
           >
             <ChevronLeft className="w-8 h-8" />
           </button>
 
-          {/* Image Slider Wrapper */}
-          <div className="relative w-full h-full flex items-center justify-center max-w-7xl mx-auto px-4 md:px-16">
+          {/* Image Slider */}
+          <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={currentIndex}
@@ -175,7 +166,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
                   x: { type: "spring", stiffness: 300, damping: 30 },
                   opacity: { duration: 0.2 },
                 }}
-                // Mobile Drag/Swipe Configuration
+                // ✅ FIX: Allow horizontal drag with spring-back to center
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={1}
@@ -187,15 +178,19 @@ export function ImageGallery({ images }: ImageGalleryProps) {
                     paginate(-1);
                   }
                 }}
-                className="absolute inset-0 flex items-center justify-center p-4 md:p-12"
+                // touch-pan-y allows the user to scroll the page vertically without triggering the horizontal slider drag
+                className="absolute inset-0 flex items-center justify-center touch-pan-y"
               >
-                <div className="relative w-full h-full">
+                {/* ✅ FIX: The relative container now perfectly scales to the 90vh parent, 
+                  and Next.js Image maintains the aspect ratio with object-contain. 
+                */}
+                <div className="relative w-full h-full md:w-[85%] md:h-[95%]">
                   <Image
                     src={images[currentIndex]}
                     alt={`Property view ${currentIndex + 1}`}
                     fill
-                    className="object-contain"
-                    sizes="100vw"
+                    className="object-contain drop-shadow-2xl"
+                    sizes="(max-w-1024px) 100vw, 1200px"
                     priority
                   />
                 </div>
@@ -203,9 +198,9 @@ export function ImageGallery({ images }: ImageGalleryProps) {
             </AnimatePresence>
           </div>
 
-          {/* Navigation Next Button */}
+          {/* Next Button (Desktop) */}
           <button
-            className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors z-50 text-white hidden md:block"
+            className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 backdrop-blur-md hover:bg-black/70 transition-colors z-50 text-white hidden md:block"
             onClick={() => paginate(1)}
           >
             <ChevronRight className="w-8 h-8" />
