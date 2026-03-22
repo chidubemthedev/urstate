@@ -1,10 +1,7 @@
 "use client";
-
-import Image from "next/image";
 import {
   House,
   ChevronRight,
-  MessageSquareText,
   ArrowLeft,
   FileText,
   Building2,
@@ -31,7 +28,7 @@ const ActionButton = ({
   title: string;
 }) => (
   <Card className="bg-[#F6FBD6] border border-[#E9F4A8] rounded-xl hover:bg-[#EFF7B8] transition-colors cursor-pointer">
-    <CardContent className="flex items-center justify-between p-5 h-[64px]">
+    <CardContent className="flex items-center justify-between p-5 h-16">
       <div className="flex items-center gap-3">
         <Icon className="w-5 h-5 text-[#8CB13B]" />
         <span className="text-base font-medium text-gray-800">{title}</span>
@@ -59,42 +56,6 @@ export function LeaseDetails({ lease }: LeaseDetailsProps) {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
-          {/* Image Gallery (Recreating the grid exactly) */}
-          {/* <div className="grid grid-cols-3 gap-4 h-[400px]">
-            <div className="col-span-2 relative h-full">
-              <Image
-                src={property.images[0]}
-                alt="Property"
-                fill
-                className="object-cover rounded-xl"
-                sizes="(max-w-1024px) 100vw, 600px"
-                priority
-              />
-            </div>
-            <div className="grid grid-rows-2 gap-4 h-full">
-              {[property.images[1], property.images[2]].map((img, i) => (
-                <div key={i} className="relative h-full">
-                  <Image
-                    src={img || property.images[0]}
-                    alt="Property detail"
-                    fill
-                    className="object-cover rounded-xl"
-                    sizes="200px"
-                  />
-                  {i === 1 && (
-                    <Button
-                      variant="secondary"
-                      className="absolute bottom-4 right-4 gap-2 bg-white/90 backdrop-blur-sm text-gray-900 rounded-lg shadow-sm"
-                    >
-                      <MessageSquareText className="w-4 h-4" />
-                      View all photos
-                    </Button>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div> */}
-
           <ImageGallery images={property.images} />
 
           <div className="space-y-6">
@@ -131,7 +92,7 @@ export function LeaseDetails({ lease }: LeaseDetailsProps) {
             <Button
               variant="outline"
               size="lg"
-              className="w-full text-base font-semibold h-[64px] border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-xl"
+              className="w-full text-base font-semibold h-16 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-xl"
             >
               Message Support
             </Button>
