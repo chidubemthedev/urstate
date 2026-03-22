@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-// ✅ Using the updated modern Framer Motion imports
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft, ChevronRight, X, ImageIcon } from "lucide-react";
 

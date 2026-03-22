@@ -16,12 +16,10 @@ export default function RenterDashboard() {
   }
 
   return (
-    <div className="max-w-[1200px] mx-auto space-y-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {leases.map((lease) => (
-          <LeaseCard key={lease.id} lease={lease} />
-        ))}
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {leases.map((lease) => (
+        <LeaseCard key={lease.id} lease={lease} />
+      ))}
     </div>
   );
 }

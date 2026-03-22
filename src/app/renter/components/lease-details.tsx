@@ -5,6 +5,7 @@ import {
   ArrowLeft,
   FileText,
   Building2,
+  DotIcon,
 } from "lucide-react";
 import type { Lease } from "@/types/property";
 import { Button } from "@/components/ui/button";
@@ -18,7 +19,7 @@ const InfoText = ({ children }: { children: React.ReactNode }) => (
   <span className="text-sm text-gray-500">{children}</span>
 );
 
-const Dot = () => <span className="text-gray-300 px-1.5">•</span>;
+const Dot = () => <DotIcon />;
 
 const ActionButton = ({
   icon: Icon,
@@ -46,7 +47,7 @@ export function LeaseDetails({ lease }: LeaseDetailsProps) {
   const { property } = lease;
 
   return (
-    <div className="max-w-[1200px] mx-auto p-4 md:p-8 space-y-8">
+    <div className="mx-auto space-y-4">
       <Button variant="ghost" asChild className="gap-2 text-gray-600 pl-0">
         <Link href="/renter/dashboard">
           <ArrowLeft className="w-4 h-4" />
@@ -55,23 +56,23 @@ export function LeaseDetails({ lease }: LeaseDetailsProps) {
       </Button>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-8">
+        <div className="lg:col-span-2 space-y-4">
           <ImageGallery images={property.images} />
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             <div className="flex items-center gap-2.5 text-[#34A853]">
-              <House className="w-5 h-5" />
-              <span className="text-sm font-semibold uppercase tracking-wide">
+              <House className="w-4 h-4" />
+              <span className="text-[12px] uppercase leading-[18px] tracking-wide">
                 Ongoing Lease
               </span>
             </div>
-            <h1 className="text-5xl font-extrabold text-[#102A43] tracking-tighter">
+            <h1 className="text-[38px] font-bold text-primary/500 leading-10">
               {property.name}
             </h1>
-            <p className="text-base text-gray-600 leading-relaxed max-w-xl">
+            <p className="text-base text-[#606060] leading-6 max-w-xl">
               {property.address}
             </p>
-            <div className="flex items-center gap-1.5 text-base text-gray-600">
+            <div className="flex items-center text-[12px] text-[#777777] leading-[18px]">
               <InfoText>{lease.duration}</InfoText>
               <Dot />
               <InfoText>{lease.type}</InfoText>

@@ -66,7 +66,7 @@ export default function DashboardShell({
         </header>
 
         {/* Page Content */}
-        <div className="flex-1 overflow-auto p-4 md:px-7 md:py-10">
+        <div className="max-w-[1200px] mx-auto flex-1 overflow-auto p-4 md:px-10 md:py-10">
           {children}
         </div>
       </main>
