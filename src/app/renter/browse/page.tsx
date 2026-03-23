@@ -1,105 +1,99 @@
 "use client";
 
-import { useState } from "react";
-import { Search, SlidersHorizontal, ChevronDown } from "lucide-react";
+import { Suspense } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { Search, SlidersHorizontal } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Checkbox } from "@/components/ui/checkbox";
-
-import { MOCK_BROWSE_DATA } from "@/lib/mock-browse-data";
+  MOCK_BROWSE_DATA,
+  PROPERTY_TYPES,
+  FURNISHING_TYPES,
+} from "@/lib/mock-browse-data";
 import { PropertyCard } from "../components/property-card";
+import { MultiSelectFilter } from "../components/multi-select-filter";
+import { LocationFilter } from "../components/location-filter";
 
-// Reusable Filter Dropdown Component
-function MultiSelectFilter({
-  title,
-  options,
-  selected,
-  onChange,
-}: {
-  title: string;
-  options: string[];
-  selected: string[];
-  onChange: (val: string, checked: boolean) => void;
-}) {
-  return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          className="gap-2 border-gray-300 text-gray-700 rounded-lg"
-        >
-          {title} <ChevronDown className="w-4 h-4 text-gray-500" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-56 p-3 rounded-xl shadow-lg" align="start">
-        <div className="space-y-3">
-          {options.map((option) => (
-            <div key={option} className="flex items-center space-x-3">
-              <Checkbox
-                id={`${title}-${option}`}
-                checked={selected.includes(option)}
-                onCheckedChange={(checked) =>
-                  onChange(option, checked as boolean)
-                }
-                className="border-gray-300 data-[state=checked]:bg-[#34A853] data-[state=checked]:border-[#34A853]"
-              />
-              <label
-                htmlFor={`${title}-${option}`}
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-              >
-                {option}
-              </label>
-            </div>
-          ))}
-        </div>
-      </PopoverContent>
-    </Popover>
-  );
-}
+function BrowseContent() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-export default function BrowsePage() {
-  // --- STATE ---
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedPrices, setSelectedPrices] = useState<string[]>([]);
+  // Parse URL Parameters
+  const querySearch = searchParams.get("q") || "";
+  const selectedCategories = searchParams.getAll("category");
+  const selectedTypes = searchParams.getAll("type");
+  const selectedLocations = searchParams.getAll("location");
+  const selectedPrices = searchParams.getAll("price");
+  const selectedFurnishing = searchParams.getAll("furnishing");
 
-  // --- HANDLERS ---
-  const toggleCategory = (val: string, checked: boolean) => {
-    setSelectedCategories((prev) =>
-      checked ? [...prev, val] : prev.filter((c) => c !== val),
-    );
+  const totalFiltersApplied =
+    selectedCategories.length +
+    selectedTypes.length +
+    selectedLocations.length +
+    selectedPrices.length +
+    selectedFurnishing.length;
+
+  // --- URL UPDATERS (Removed useCallback to satisfy React Compiler) ---
+  const updateQueryString = (name: string, value: string, checked: boolean) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (checked) {
+      params.append(name, value);
+    } else {
+      const existing = params.getAll(name);
+      params.delete(name);
+      existing
+        .filter((v) => v !== value)
+        .forEach((v) => params.append(name, v));
+    }
+
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
-  const togglePrice = (val: string, checked: boolean) => {
-    setSelectedPrices((prev) =>
-      checked ? [...prev, val] : prev.filter((p) => p !== val),
-    );
+  const handleSearchInput = (val: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (val) params.set("q", val);
+    else params.delete("q");
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   const clearFilters = () => {
-    setSelectedCategories([]);
-    setSelectedPrices([]);
-    setSearchQuery("");
+    router.push(pathname, { scroll: false });
   };
 
-  // --- FILTERING LOGIC ---
+  // --- ENHANCED FILTERING LOGIC ---
   const filteredData = MOCK_BROWSE_DATA.filter((property) => {
-    // 1. Search Query
-    const matchesSearch =
-      property.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      property.address.toLowerCase().includes(searchQuery.toLowerCase());
+    const query = querySearch.toLowerCase();
 
-    // 2. Category Filter (If none selected, show all)
+    // Now searches across Name, Address, Category, and Type!
+    const matchesSearch =
+      query === "" ||
+      property.name.toLowerCase().includes(query) ||
+      property.address.toLowerCase().includes(query) ||
+      property.category.toLowerCase().includes(query) ||
+      property.type.toLowerCase().includes(query);
+
     const matchesCategory =
       selectedCategories.length === 0 ||
       selectedCategories.includes(property.category);
+    const matchesType =
+      selectedTypes.length === 0 || selectedTypes.includes(property.type);
 
-    // 3. Price Filter (Mock logic evaluating the price ranges)
+    const matchesLocation =
+      selectedLocations.length === 0 ||
+      selectedLocations.some((loc) =>
+        property.address
+          .toLowerCase()
+          .includes(loc.split(",")[0].toLowerCase().trim()),
+      );
+
+    const furnishString = property.furnished ? "Furnished" : "Unfurnished";
+    const matchesFurnishing =
+      selectedFurnishing.length === 0 ||
+      selectedFurnishing.includes(furnishString);
+
     let matchesPrice = selectedPrices.length === 0;
     if (!matchesPrice) {
       const p = property.price;
@@ -112,7 +106,14 @@ export default function BrowsePage() {
       if (selectedPrices.includes("4M+") && p > 4000000) matchesPrice = true;
     }
 
-    return matchesSearch && matchesCategory && matchesPrice;
+    return (
+      matchesSearch &&
+      matchesCategory &&
+      matchesType &&
+      matchesLocation &&
+      matchesFurnishing &&
+      matchesPrice
+    );
   });
 
   return (
@@ -121,55 +122,58 @@ export default function BrowsePage() {
         Find Apartment
       </h1>
 
-      {/* --- SEARCH BAR --- */}
       <div className="relative">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
         <Input
-          placeholder="Cabins, Beachfront House, Rooms"
-          className="w-full pl-12 h-14 bg-gray-100/80 border-none rounded-xl text-base focus-visible:ring-1 focus-visible:ring-[#102A43]"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Cabins, Beachfront House, Rooms..."
+          className="w-full pl-12 h-14 bg-[#F2F2F2] border-none rounded-xl text-base focus-visible:ring-1 focus-visible:ring-[#102A43]"
+          defaultValue={querySearch}
+          onChange={(e) => handleSearchInput(e.target.value)}
         />
       </div>
 
-      {/* --- FILTER BAR --- */}
       <div className="flex flex-wrap items-center gap-3">
-        <Button variant="outline" className="px-3 border-gray-300 rounded-lg">
+        <Button
+          variant="outline"
+          className="px-3 border-gray-300 rounded-lg h-10"
+        >
           <SlidersHorizontal className="w-4 h-4" />
         </Button>
 
         <MultiSelectFilter
           title="Category"
+          paramKey="category"
           options={["Long term", "Shortlet", "BNB"]}
           selected={selectedCategories}
-          onChange={toggleCategory}
+          onChange={updateQueryString}
         />
-
-        {/* Keeping these as visual placeholders for now, they work the same way */}
-        <Button
-          variant="outline"
-          className="gap-2 border-gray-300 text-gray-700 rounded-lg"
-        >
-          Property Type <ChevronDown className="w-4 h-4 text-gray-500" />
-        </Button>
-        <Button
-          variant="outline"
-          className="gap-2 border-gray-300 text-gray-700 rounded-lg"
-        >
-          Location <ChevronDown className="w-4 h-4 text-gray-500" />
-        </Button>
-
+        <MultiSelectFilter
+          title="Property Type"
+          paramKey="type"
+          options={PROPERTY_TYPES}
+          selected={selectedTypes}
+          onChange={updateQueryString}
+        />
+        <LocationFilter
+          selected={selectedLocations}
+          onChange={updateQueryString}
+        />
         <MultiSelectFilter
           title="Price"
+          paramKey="price"
           options={["Under 500k", "500k - 2M", "2M - 4M", "4M+"]}
           selected={selectedPrices}
-          onChange={togglePrice}
+          onChange={updateQueryString}
+        />
+        <MultiSelectFilter
+          title="Furnishing"
+          paramKey="furnishing"
+          options={FURNISHING_TYPES}
+          selected={selectedFurnishing}
+          onChange={updateQueryString}
         />
 
-        {/* Clear Filter Button */}
-        {(selectedCategories.length > 0 ||
-          selectedPrices.length > 0 ||
-          searchQuery !== "") && (
+        {(totalFiltersApplied > 0 || querySearch !== "") && (
           <button
             onClick={clearFilters}
             className="text-sm font-medium text-[#227CBD] hover:text-[#102A43] transition-colors ml-2"
@@ -179,18 +183,32 @@ export default function BrowsePage() {
         )}
       </div>
 
-      {/* --- GRID OF PROPERTIES --- */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 pt-4">
         {filteredData.length > 0 ? (
           filteredData.map((property) => (
             <PropertyCard key={property.id} property={property} />
           ))
         ) : (
-          <div className="col-span-full py-20 text-center text-gray-500">
-            No properties found matching your criteria.
+          <div className="col-span-full py-20 text-center text-gray-500 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+            No properties found matching your criteria. Try clearing some
+            filters.
           </div>
         )}
       </div>
     </div>
+  );
+}
+
+export default function BrowsePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="p-8 text-center text-gray-500">
+          Loading properties...
+        </div>
+      }
+    >
+      <BrowseContent />
+    </Suspense>
   );
 }
