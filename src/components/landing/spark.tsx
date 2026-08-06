@@ -1,10 +1,10 @@
 const Spark = () => {
   return (
-    <div className="ml-[25px] md:ml-[41px]">
+    <div className="hidden md:block ml-[25px] md:ml-[41px]">
       <div className="relative max-w-[652px] mx-auto">
-        <div className="absolute top-[-27px] md:top-[-41px] left-[-31px] md:-left-16 w-full h-full max-w-[652px] mx-auto border border-[#0C2C431A] rounded-2xl p-[47px] shadow-[0_0_5px_0_#00000024] -z-20" />
-        <div className="absolute top-[-13px] md:top-[-19px] -left-3.5 md:left-[-27px] w-full h-full max-w-[652px] mx-auto border border-[#0C2C431A] rounded-2xl p-[47px] shadow-[0_0_5px_0_#00000024] -z-10 bg-white" />
-        <div className="max-w-[652px] mx-auto border border-[#0C2C431A] rounded-2xl p-[17px] md:p-[47px] shadow-[0_0_5px_0_#00000024] z-50 bg-white">
+        <div className="absolute top-[-27px] md:top-[-41px] left-[-31px] md:left-[34px] w-full h-full max-w-[652px] mx-auto border border-[#0C2C431A] rounded-2xl p-[47px] -z-20 rotate-[4.41deg]" />
+        <div className="absolute top-[-13px] md:top-[-39px] -left-3.5 md:left-[-47px] w-full h-full max-w-[652px] mx-auto border border-[#0C2C431A] rounded-2xl p-[47px] -z-10 bg-white rotate-[-3.74deg]" />
+        <div className="max-w-[652px] mx-auto border border-[#0C2C431A] rounded-2xl p-[17px] md:p-[47px] z-50 bg-white">
           <h1 className="text-[#227CBD] text-[18px] leading-6 border-b-[0.5px] border-[#777777] py-6">
             The spark
           </h1>
