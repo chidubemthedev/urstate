@@ -58,7 +58,7 @@ const Form = ({ trigger }: Props) => {
         name.trim(),
         email.trim(),
         phone.trim(),
-        role
+        role,
       );
       console.log("Added waitlist entry id:", id);
       // Clear form
@@ -156,7 +156,7 @@ const Form = ({ trigger }: Props) => {
                       <SelectLabel>Roles</SelectLabel>
                       <SelectItem value="renter">Renter</SelectItem>
                       <SelectItem value="owner">Owner</SelectItem>
-                      <SelectItem value="manager">Manager</SelectItem>
+                      <SelectItem value="manager">Manager/Agent</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>

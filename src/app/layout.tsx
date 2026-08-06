@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { Toaster } from "@/components/ui/sonner";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AnalyticsInitializer from "@/components/analytics";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +32,18 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AnalyticsInitializer />
-        {children}
+        <TooltipProvider>{children}</TooltipProvider>
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            classNames: {
+              content: "flex flex-col gap-2",
+            },
+            style: {
+              "--border-radius": "calc(var(--radius) + 4px)",
+            } as React.CSSProperties,
+          }}
+        />
       </body>
     </html>
   );

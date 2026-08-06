@@ -1,0 +1,127 @@
+"use client";
+import {
+  House,
+  ChevronRight,
+  ArrowLeft,
+  FileText,
+  Building2,
+  DotIcon,
+} from "lucide-react";
+import type { Lease } from "@/types/property";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { LeaseTimeline } from "@/app/renter/components/lease-timeline";
+import { CautionFeeCard } from "@/app/renter/components/caution-fee-card";
+import { ImageGallery } from "@/components/shared/image-gallery";
+import Link from "next/link";
+
+const InfoText = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-sm text-gray-500">{children}</span>
+);
+
+const Dot = () => <DotIcon />;
+
+const ActionButton = ({
+  icon: Icon,
+  title,
+}: {
+  icon: React.ElementType;
+  title: string;
+}) => (
+  <Card className="bg-[#F6FBD6] border border-[#E9F4A8] rounded-xl hover:bg-[#EFF7B8] transition-colors cursor-pointer">
+    <CardContent className="flex items-center justify-between p-5 h-10">
+      <div className="flex items-center gap-3">
+        <Icon className="w-5 h-5 text-[#8CB13B]" />
+        <span className="text-base font-medium text-gray-800">{title}</span>
+      </div>
+      <ChevronRight className="w-5 h-5 text-gray-400" />
+    </CardContent>
+  </Card>
+);
+
+interface LeaseDetailsProps {
+  lease: Lease;
+}
+
+export function LeaseDetails({ lease }: LeaseDetailsProps) {
+  const { property } = lease;
+
+  return (
+    <div className="mx-auto space-y-4">
+      <Button variant="ghost" asChild className="gap-2 text-gray-600 pl-0">
+        <Link href="/renter/dashboard">
+          <ArrowLeft className="w-4 h-4" />
+          Go Back
+        </Link>
+      </Button>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-4">
+          <ImageGallery images={property.images} />
+
+          <div className="space-y-4">
+            <div className="flex items-center gap-2.5 text-[#34A853]">
+              <House className="w-4 h-4" />
+              <span className="text-[12px] uppercase leading-[18px] tracking-wide">
+                Ongoing Lease
+              </span>
+            </div>
+            <h1 className="text-[38px] font-bold text-primary/500 leading-10">
+              {property.name}
+            </h1>
+            <p className="text-base text-[#606060] leading-6 max-w-xl">
+              {property.address}
+            </p>
+            <div className="flex items-center text-[12px] text-[#777777] leading-[18px]">
+              <InfoText>{lease.duration}</InfoText>
+              <Dot />
+              <InfoText>{lease.type}</InfoText>
+              <Dot />
+              <InfoText>
+                {lease.beds} bed/{lease.baths} bath
+              </InfoText>
+              <Dot />
+              <InfoText>
+                {lease.furnished ? "Furnished" : "Unfurnished"}
+              </InfoText>
+            </div>
+          </div>
+
+          <div className="space-y-4 max-w-xl">
+            <ActionButton icon={FileText} title="Lease agreement" />
+            <ActionButton icon={Building2} title="Property details" />
+            <Button
+              variant="outline"
+              size="lg"
+              className="w-full text-base font-semibold h-16 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-xl"
+            >
+              Message Support
+            </Button>
+          </div>
+        </div>
+
+        <div className="lg:col-span-1">
+          <Card className="rounded-xl border-[0.5px] border-[#D2D2D2] p-8 space-y-8 sticky shadow-none">
+            <div className="space-y-3">
+              <p className="text-sm text-[#333333]">Rent Price</p>
+              <p className="text-5xl font-bold text-primary/500 leading-8 tracking-tight">
+                {lease.rentAmountFormatted}
+              </p>
+            </div>
+
+            {/* 🆕 Using the extracted components */}
+            <LeaseTimeline lease={lease} />
+            <CautionFeeCard amount={lease.cautionFee} />
+
+            <Button
+              size="lg"
+              className="w-full bg-[#102A43] text-white hover:bg-[#081B2E] rounded-[10px] text-base font-semibold h-14"
+            >
+              Renew payment
+            </Button>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}

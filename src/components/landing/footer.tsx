@@ -9,6 +9,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <div className="flex flex-col gap-6 md:flex-row items-center justify-between border-t-[0.5px] border-[#777777] pt-10 pb-14">
       <div className="space-y-4">
@@ -52,7 +54,7 @@ const Footer = () => {
         </div>
         <p className="flex items-center gap-px text-[#333333] text-xs leading-[18px]">
           <CopyrightIcon />
-          2025 Urstate Technologies
+          {currentYear} Urstate Technologies
         </p>
       </div>
     </div>

@@ -22,8 +22,8 @@ const Success = ({ trigger, open, onOpenChange, role }: Props) => {
     if (role === "owner") {
       return (
         <>
-          To list your property today, click below to connect directly with our
-          onboarding team.
+          You can start listing with us today and get access to our pool of
+          renters. Join other owners like yourself.
         </>
       );
     }
@@ -31,8 +31,8 @@ const Success = ({ trigger, open, onOpenChange, role }: Props) => {
     if (role === "manager") {
       return (
         <>
-          Start onboarding your properties now, connect with our team to get set
-          up.
+          You can start listing with us today and get access to our pool of
+          renters. Join other owners like yourself.
         </>
       );
     }
@@ -40,7 +40,7 @@ const Success = ({ trigger, open, onOpenChange, role }: Props) => {
     // default (renter)
     return (
       <>
-        Meanwhile, join our WhatsApp Channel to stay updated on available
+        In the meantime, input your interest to stay updated on available
         properties and rental tips.
       </>
     );
@@ -54,7 +54,7 @@ const Success = ({ trigger, open, onOpenChange, role }: Props) => {
             <Image src={"/images/party.gif"} alt="gif" width={48} height={48} />
           </div>
           <DialogTitle className="text-[#0C2C43] font-bold text-[22px] leading-8 text-center">
-            Thanks for joining Urstate!
+            Welcome to Urstate!
             <br />
             You&apos;re now on our waitlist.
           </DialogTitle>
@@ -73,7 +73,9 @@ const Success = ({ trigger, open, onOpenChange, role }: Props) => {
               </Link>
 
               <Link
-                href={"https://whatsapp.com/channel/0029VbBLLYU1NCrO6ZGIsO1J"}
+                href={
+                  "https://chat.whatsapp.com/GPCZFMv6CHuH5Qs2BPIA0Z?mode=gi_t"
+                }
                 target={"_blank"}
                 className="w-full"
               >
@@ -83,18 +85,37 @@ const Success = ({ trigger, open, onOpenChange, role }: Props) => {
                   className="w-full h-12 border border-[#0C2C43]"
                   variant={"secondary"}
                 >
-                  Join WhatsApp Channel
+                  Join Our Community
                 </Button>
               </Link>
             </div>
           )}
 
           {role === "manager" && (
-            <Link href={"mailto:hello.urstate@gmail.com"} className="w-full">
-              <Button type="button" size={"lg"} className="w-full h-12">
-                Talk to our team
-              </Button>
-            </Link>
+            <div className="flex flex-col gap-4 w-full">
+              <Link href={"https://bit.ly/listwithurstate"} className="w-full">
+                <Button type="button" size={"lg"} className="w-full h-12">
+                  List With Us
+                </Button>
+              </Link>
+
+              <Link
+                href={
+                  "https://chat.whatsapp.com/KNjUfvymrOt7OBWgF9CGoq?mode=gi_t"
+                }
+                target={"_blank"}
+                className="w-full"
+              >
+                <Button
+                  type="button"
+                  size={"lg"}
+                  className="w-full h-12 border border-[#0C2C43]"
+                  variant={"secondary"}
+                >
+                  Join Our Community
+                </Button>
+              </Link>
+            </div>
           )}
 
           {(!role || role === "renter") && (
