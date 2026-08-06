@@ -14,7 +14,7 @@ const Nav = () => {
         <Image src={"/images/logo.png"} width={120} height={28} alt="logo" />
       </div>
 
-      <Link href={"/login"}>
+      {/* <Link href={"/login"}>
         <Button
           size={"lg"}
           variant={"outline"}
@@ -22,7 +22,7 @@ const Nav = () => {
         >
           Sign In
         </Button>
-      </Link>
+      </Link> */}
 
       <Form
         trigger={
@@ -30,7 +30,7 @@ const Nav = () => {
             <Button
               size={"sm"}
               variant={"outline"}
-              className="border border-[#0C2C43] flex md:hidden"
+              className="border border-[#0C2C43] flex"
             >
               Join our Waitlist
             </Button>
