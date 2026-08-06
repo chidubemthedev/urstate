@@ -24,7 +24,7 @@ const Trio = () => {
         </div>
         <div>
           <h1 className="text-[#333333] text-[22px] leading-8 font-bold">
-            For Property Managers
+            For Property Managers/Agents
           </h1>
           <p className="text-[#777777] text-sm leading-5">
             Manage multiple units with ease. Track rent and payments in one
