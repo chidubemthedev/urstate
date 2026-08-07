@@ -9,23 +9,25 @@ const Spark = () => {
             The spark
           </h1>
           <p className="mt-4 md:mt-6 text-[#333333] text-xs md:text-base leading-[18px] md:leading-6">
-            I grew up with a single mother and siblings who did everything she
-            could to give us a decent life. Like many families, housing was one
-            of our biggest struggles. We all lived in one room for the longest
-            time, later two rooms, and finally a more proper home (a family
-            friend owned the property and we didn’t have to deal with agent’s
-            hassle or extra charges).
+            UrState began with a simple observation: finding or managing a
+            rental home in Africa is often far more difficult than it should be.
           </p>
           <p className="mt-4 md:mt-6 text-[#333333] text-xs md:text-base leading-[18px] md:leading-6">
-            Along the way, I saw challenges that countless families and property
-            owners still face today: tenants battling fraud, hidden fees, and
-            rigid rent structures that don’t match how people actually earn; and
-            property owners struggling with unreliable rent collection, poor
-            visibility, and recurring disputes over maintenance.
+            Across the continent, renters face lots of hassle and uncertainty,
+            while property owners & managers struggle with fragmented management
+            processes. Housing, one of life&apos;s most essential needs, has
+            become a system built on chance rather than trust.
           </p>
           <p className="mt-4 md:mt-6 text-[#333333] text-xs md:text-base leading-[18px] md:leading-6">
-            These experiences shaped my vision for Urstate. That’s why we’re
-            building a system where trust, not chance, drives where people live.
+            Our team has experienced these challenges firsthand, and that&apos;s
+            what inspired us to build UrState. We&apos;re creating Africa&apos;s
+            rental infrastructure, a trusted, end-to-end platform where
+            verification, secure payments, and transparent processes make
+            renting simpler, safer, and more accessible for everyone.
+          </p>
+          <p className="mt-4 md:mt-6 text-[#333333] text-xs md:text-base leading-[18px] md:leading-6">
+            Because we believe where people live should be determined by trust,
+            not chance.
           </p>
           <p className="mt-6 text-[#333333] text-base leading-6 italic">
             With love & grit,
