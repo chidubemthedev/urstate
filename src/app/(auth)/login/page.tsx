@@ -9,7 +9,8 @@ const LoginPage = () => {
   const handleGoogleLogin = async () => {
     await signIn.social({
       provider: "google",
-      callbackURL: "http://localhost:4000/dashboard",
+      // Use the current origin so this works on localhost and deployed domains.
+      callbackURL: `${window.location.origin}/dashboard`,
     });
   };
 

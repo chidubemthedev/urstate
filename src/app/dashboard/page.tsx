@@ -17,7 +17,7 @@ export default async function DashboardTrafficCop() {
 
   // 3. No role yet? (Google users)
   if (!session.user.role) {
-    redirect("/onboarding");
+    redirect("/choose-role");
   }
 
   // 4. Send them to their correct home!

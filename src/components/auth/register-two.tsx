@@ -41,7 +41,8 @@ const RegisterTwo = ({ form }: Props) => {
     try {
       await signIn.social({
         provider: "google",
-        callbackURL: "http://localhost:4000/choose-role",
+        // Use the current origin so this works on localhost and deployed domains.
+        callbackURL: `${window.location.origin}/choose-role`,
       });
     } finally {
       setIsLoading(false);

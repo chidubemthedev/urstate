@@ -41,6 +41,22 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Admin dashboard tokens (from the Figma Make admin design) */
+  --color-admin-ink: #1c2b4a;
+  --color-admin-accent: #5b5fef;
+  --color-admin-canvas: #f5f6fa;
+  --color-admin-line: #f3f4f6;
+  --color-admin-border: #e5e7eb;
+  --color-admin-muted: #9ca3af;
+  --color-admin-subtle: #6b7280;
+  --color-admin-body: #374151;
+  --color-admin-success: #1fae73;
+  --color-admin-warning: #d97706;
+  --color-admin-danger: #e53e3e;
+  --color-admin-info: #2563eb;
+  --shadow-admin-card: 0 2px 12px rgba(0, 0, 0, 0.07);
+  --shadow-admin-raised: 0 8px 28px rgba(0, 0, 0, 0.12);
 }
 
 :root {

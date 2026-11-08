@@ -20,7 +20,8 @@ export default async function OwnerLayout({
 
   // 3. Handle the redirects based on the response from Express
   if (!session) redirect("/login");
-  if (!session.user.role) redirect("/onboarding");
+  if (!session.user.role) redirect("/choose-role");
+  if (session.user.role === "admin") redirect("/admin/dashboard");
   if (session.user.role !== "owner") redirect("/renter/dashboard");
 
   return <DashboardShell role="owner">{children}</DashboardShell>;

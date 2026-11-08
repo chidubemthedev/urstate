@@ -23,7 +23,7 @@ export default function Onboarding() {
 
     try {
       // We use standard fetch here because this is a custom API route, not a Better Auth route
-      const response = await fetch("http://localhost:3000/api/user/role", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user/role`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
